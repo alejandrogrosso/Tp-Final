@@ -6,7 +6,13 @@ export default function Login() {
     const [usuario, onChangeUsuario] = React.useState(null);
     const [contrasenia, onChangeContrasenia] = React.useState(null);
     return (
+
         <View style={styles.container}>
+
+        <View style={styles.espacio}></View>
+        <Text>Login</Text>
+        <View style={styles.espacio}></View>
+
             <Text>Usuario</Text>
             <TextInput
                 style={styles.input}
@@ -37,7 +43,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
     },
     input: {
         height: 40,
@@ -46,4 +51,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
+    espacio:{ margin:50},
+
 });

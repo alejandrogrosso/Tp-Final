@@ -9,49 +9,99 @@ export default function Search() {
     const [saldoMax, onChangeSaldoMax] = React.useState(null);
     return (
         <View style={styles.container}>
-            <TouchableHighlight style={styles.Button}>
-                <Button
 
-                    title="Iniciar sesion"
+            <View style={{margin:50}}></View>
+            <Text>Buscar</Text>
+            <View style={{margin:20}}></View>
+
+            <View  style = {styles.inline}>
+                <View style={styles.Button}>
+                    <Button
+                    title="Nombre"
                     onPress={() => Alert.alert('Funciono el boton!')}
                 />
-            </TouchableHighlight>
-            <Button
-                style={styles.Button}
-                title="Iniciar sesion"
-                onPress={() => Alert.alert('Funciono el boton!')}
-            />
-
+                </View>
+                <View style={styles.Button}>
+                    <Button
+                    title="Apellido"
+                    onPress={() => Alert.alert('Funciono el boton!')}
+                />
+                </View>
+                
+            </View>
+            <View  style = {styles.inline}>
+                <View style={styles.Button}>
+                    <Button
+                    title="Sucursal"
+                    onPress={() => Alert.alert('Funciono el boton!')}
+                />
+                </View>
+                <View style={styles.Button}>
+                    <Button
+                    title="Saldo"
+                    onPress={() => Alert.alert('Funciono el boton!')}
+                />
+                </View>
+                
+            </View>
+            
+            <View style={styles.espacio}></View>
+            
             <Text>Nombre</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeNombre}
                 value={nombre}
-                placeholder="Ingrese usuario"
+                placeholder="Ingrese un nombre"
             />
             <Text>Apellido</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeApellido}
                 value={apellido}
-                placeholder="Ingrese contraseña"
+                placeholder="Ingrese un apellido"
             />
+            <Text>Sucursal</Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeSucursal}
+                value={apellido}
+                placeholder="Ingrese una Sucursal"
+            />
+            <Text>Saldo</Text>
+            <View style={styles.inline}>
+            <TextInput
+                style={styles.inputSaldo}
+                onChangeText={onChangeSucursal}
+                value={apellido}
+                placeholder="Ingrese una Sucursal"
+            />
+            <Text style= {{marginTop: 20}}> ----- </Text>
+            <TextInput
+                style={styles.inputSaldo}
+                onChangeText={onChangeSucursal}
+                value={apellido}
+                placeholder="Ingrese una Sucursal"
+            />
+
+            </View>
+            
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     Button: {
-        backgroundColor: `#ff5c5c`,
-        color: `#2196F3`,
-        borderColor: "#ff5c5c",
+        margin: 10,
+        display: 'flex',
+        color: 'black',
 
     },
     container: {
         backgroundColor: "#fff",
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+      
     },
     input: {
         height: 40,
@@ -59,6 +109,21 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10
+    },
+    inputSaldo: {
+        height: 40,
+        width: 100,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10
+    },
+    inline: {
+        
+        flexDirection:'row',
+    },
+    espacio:{
+        margin:20,
     }
+    
 
 });
