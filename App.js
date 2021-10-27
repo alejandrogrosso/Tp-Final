@@ -11,7 +11,7 @@ import Desplegable from './pages/results/components/desplegable.js'
 export default function App() {
   return (
 
-    <Results/>
+    <Search/>
 
   );
 }
