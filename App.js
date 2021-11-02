@@ -19,16 +19,6 @@ export default function App() {
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: Constants.statusBarHeight
 
-  },
-  button: {
-    alignItems: 'center',
-    padding: 5,
-    marginBottom: 10,
-    backgroundColor: '#8FCFF2'
-  }
+
 });

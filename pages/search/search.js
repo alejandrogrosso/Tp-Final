@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Constants from "expo-constants";
 const camposRol =
 {
@@ -9,25 +9,38 @@ const camposRol =
     "Saldo": "27000"
 }
 export default function Search() {
+    
     const [nombre, onChangeNombre] = React.useState(null);
     const [apellido, onChangeApellido] = React.useState(null);
     const [sucursal, onChangeSucursal] = React.useState(null);
     const [saldoMin, onChangeSaldoMin] = React.useState(null);
     const [saldoMax, onChangeSaldoMax] = React.useState(null);
+
+    function imprimir(input) {
+        return (
+            <View>
+                <Text>{input}</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNombre}
+                    value={input}
+                    placeholder="Ingrese un "
+                />
+            </View>
+        );
+    }
     return (
+
         <View style={styles.container}>
 
+            <Text styles={styles.text}>Buscar</Text>
 
 
-            <View style={{ margin: 50 }}></View>
-            <Text>Buscar</Text>
-            <View style={{ margin: 20 }}></View>
-
-            <View style={styles.container}>{
+            <View style={styles.contenedorBotones}>{
                 Object.keys(camposRol).map((x, index) => (
 
-                    <TouchableOpacity key={index}>
-                        <View style={styles.Button}>
+                    <TouchableOpacity key={index} onPress={() => imprimir(x)}>
+                        <View style={styles.button}>
                             <Text>{x}</Text>
                         </View>
 
@@ -57,36 +70,37 @@ export default function Search() {
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeSucursal}
-                value={apellido}
+                value={sucursal}
                 placeholder="Ingrese una Sucursal"
             />
             <Text>Saldo</Text>
             <View style={styles.inline}>
                 <TextInput
                     style={styles.inputSaldo}
-                    onChangeText={onChangeSucursal}
-                    value={apellido}
+                    onChangeText={onChangeSaldoMin}
+                    value={saldoMin}
                     placeholder="Ingrese una Sucursal"
                 />
                 <Text style={{ marginTop: 20 }}> ----- </Text>
                 <TextInput
                     style={styles.inputSaldo}
-                    onChangeText={onChangeSucursal}
-                    value={apellido}
+                    onChangeText={onChangeSaldoMax}
+                    value={saldoMax}
                     placeholder="Ingrese una Sucursal"
                 />
 
             </View>
 
-        </View>
+        </View >
     );
 }
 
 const styles = StyleSheet.create({
-    Button: {
+    button: {
         margin: 10,
         display: 'flex',
         color: 'black',
+
     },
     input: {
         height: 40,
@@ -100,27 +114,29 @@ const styles = StyleSheet.create({
         width: 100,
         margin: 12,
         borderWidth: 1,
-        padding: 10
+        padding: 10,
+
     },
     inline: {
-
         flexDirection: 'row',
     },
     espacio: {
         margin: 20,
     },
     container: {
-        backgroundColor: "#fff",
-        flex: 1,
+        marginTop: Constants.statusBarHeight,
+        alignItems: 'center',
+    },
+    contenedorBotones: {
+        marginTop: 35,
         alignItems: 'center',
 
     },
-    button: {
-        alignItems: 'center',
-        padding: 5,
-        marginBottom: 10,
-        backgroundColor: '#8FCFF2'
+
+    text: {
+        fontSize: 200,
     }
+
 
 
 });
