@@ -1,18 +1,15 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import Constants from "expo-constants";
 
-export default function Login() {
+export default function Login({ navigation }) {
     const [usuario, onChangeUsuario] = React.useState(null);
     const [contrasenia, onChangeContrasenia] = React.useState(null);
     return (
 
         <View style={styles.container}>
-
-        <View style={styles.espacio}></View>
-        <Text>Login</Text>
-        <View style={styles.espacio}></View>
-
+            
             <Text>Usuario</Text>
             <TextInput
                 style={styles.input}
@@ -29,7 +26,8 @@ export default function Login() {
             />
             <Button
                 title="Iniciar sesion"
-                onPress={() => Alert.alert('Funciono el boton!')}
+                onPress={() => navigation.navigate('Search')
+                }
             />
 
         </View>
@@ -40,8 +38,7 @@ export default function Login() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#fff",
-        flex: 1,
+        marginTop: Constants.statusBarHeight,
         alignItems: 'center',
     },
     input: {
@@ -51,6 +48,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
-    espacio:{ margin:50},
+   
 
 });
