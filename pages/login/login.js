@@ -9,7 +9,7 @@ export default function Login({ navigation }) {
     return (
 
         <View style={styles.container}>
-            
+
             <Text>Usuario</Text>
             <TextInput
                 style={styles.input}
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
-   
+
 
 });
