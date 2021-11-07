@@ -24,6 +24,7 @@ export default function TableAdmin(props) {
 
     })()
   }, [])
+  /* Ver como hacer post para back
   const setAdmin = (user) => {
     let newValores = { ...dataUsers };
 
@@ -32,10 +33,9 @@ export default function TableAdmin(props) {
     };
 
     setValores(newValores);
-  };
-  const element = (usuarios) => (
-
-    < TouchableOpacity onPress={() => setAdmin(usuarios)
+  };*/
+  const element = (usuario) => (
+    < TouchableOpacity onPress={() => console.log(usuario)
     }>
 
       <View style={styles.btn}>
