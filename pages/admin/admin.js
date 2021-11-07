@@ -1,45 +1,50 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import clientesServices from '../../services/clientesServices';
 import Constants from "expo-constants";
-
+import ModalSelector from 'react-native-modal-selector'
+const roles = [
+  { key: 'Admin', label: 'Admin' },
+  { key: 'Empleado', label: 'Empleado' },
+  { key: 'Gerente', label: 'Gerente' }
+]
 
 export default function TableAdmin(props) {
   const navigation = props.navigation;
   const [dataUsers, setDataUsers] = useState({
-    tableHead: ['Dni', 'Nombre', 'Apellido', 'Rol', '-'],
+    tableHead: ['Dni', 'Nombre', 'Apellido', 'Rol',],
     tableData: []
   })
+  const [modalOpened, setModalOpened] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
-    (async () => {
-      const response = await clientesServices.getUsuarios();
-      const aux = {
-        tableData: response.data.map((values) => Object.values(values)),
-        tableHead: dataUsers.tableHead
-      }
-      setDataUsers(aux);
-      console.log(aux)
-
-    })()
+    downloadUsers()
   }, [])
-  /* Ver como hacer post para back
-  const setAdmin = (user) => {
-    let newValores = { ...dataUsers };
 
-    newValores[campo] = {
-      
-    };
+  const downloadUsers = async () => {
+    const response = await clientesServices.getUsuarios();
+    const aux = {
+      tableData: response.data,
+      tableHead: dataUsers.tableHead
+    }
+    setDataUsers(aux);
+  }
 
-    setValores(newValores);
-  };*/
+  const updateUserRole = async (rol) => {
+    console.log(selectedUser);
+    await clientesServices.updateCliente(selectedUser._id, rol.key);
+    await downloadUsers()
+  };
+
   const element = (usuario) => (
-    < TouchableOpacity onPress={() => console.log(usuario)
-    }>
-
+    < TouchableOpacity onPress={() => {
+      setModalOpened(true);
+      setSelectedUser(usuario);
+    }}>
       <View style={styles.btn}>
-        <Text style={styles.btnText}>Admin</Text>
+        <Text style={styles.btnText}>{usuario.rol}</Text>
       </View>
     </TouchableOpacity >
   );
@@ -48,22 +53,33 @@ export default function TableAdmin(props) {
   return (
 
     < View style={styles.container} >
+      <ModalSelector
+        customSelector={<></>}
+        visible={modalOpened}
+        onModalClose={() => setModalOpened(false)}
+        data={roles}
+        initValue="Select something yummy!"
+        onChange={(option) => { updateUserRole(option) }} />
       <ScrollView horizontal={true}>
         <Table borderStyle={{ borderColor: 'transparent' }}>
           <Row data={dataUsers.tableHead} style={styles.head} textStyle={styles.text} />
           {
-            dataUsers.tableData.map((rowData, index) => (
-              <TableWrapper key={index} style={styles.row}>
-                <>
-                  {
-                    rowData.map((cellData, cellIndex) => (
-                      <Cell key={cellIndex} data={cellData} textStyle={styles.text} />
-                    ))
-                  }
-                  <Cell data={element(rowData)} textStyle={styles.text} />
-                </>
-              </TableWrapper>
-            ))
+            dataUsers.tableData.map((item, index) => {
+              const keyValues = Object.entries(item)
+              return (
+                <TableWrapper key={index} style={styles.row}>
+                  <>
+                    {
+                      keyValues.filter(keyValue => keyValue[0] !== '_id' && keyValue[0] !== 'rol').map((keyValue, cellIndex) => {
+                        const [key, value] = keyValue
+                        return <Cell key={cellIndex} data={value} textStyle={styles.text} />
+                      })
+                    }
+                    <Cell data={element(item)} textStyle={styles.text} />
+                  </>
+                </TableWrapper>
+              )
+            })
           }
         </Table>
       </ScrollView>

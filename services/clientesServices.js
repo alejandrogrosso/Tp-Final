@@ -2,7 +2,7 @@ import axios from 'axios'
 import getSucursales from './sucursales'
 
 const apiClient = axios.create({
-    baseURL: `http://192.168.1.11:3000`,
+    baseURL: `http://192.168.1.11:3030`,
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -12,14 +12,17 @@ const apiClient = axios.create({
 export default {
     async getUsuarios() {
         return await apiClient.get('/usuarios')
-        
+
     },
     async getSucursales() {
         return await apiClient.get('/sucursales')
-    },    /*
-    getProductosPor(id) {
-        return apiClient.get('/productos/' + id)
     },
+    async getClientes() {
+        return await apiClient.get('/clientes')
+    },
+    async updateCliente(id, nuevoRol) {
+        return await apiClient.post(`/usuarios/${id}/cambiarRol`, { "rol": nuevoRol })
+    }/*
     postProductos(producto) {
         return apiClient.post('/productos/', producto)
     },

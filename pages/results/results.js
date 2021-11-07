@@ -1,28 +1,39 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import Desplegable from './components/desplegable.js'
 import Constants from "expo-constants";
 
-export default class TablaResultados extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tableHead: ['Registro', 'Nombre', 'Apellido', 'Sucursal', 'Saldo'],
-      widthArr: [70, 110, 110, 110, 110]
-    }
-  }
+export default function TablaResultados() {
+  const [dataEmpleados, setDataEmpleados] = useState({
+    tableHead: [],
+    tableData: []
+  })
 
-  render() {
-    const state = this.state;
-    const tableData = [];
-    for (let i = 0; i < 10; i += 1) {
-      const rowData = [];
-      for (let j = 0; j < 5; j += 1) {
-        rowData.push(`${i}${j}`);
+  useEffect(() => {
+    (async () => {
+      const response = await clientesServices.getClientes();
+      const aux = {
+        tableData: response.data.map((values) => Object.values(values)),
+        tableHead: dataUsers.tableHead
       }
-      tableData.push(rowData);
+      setDataEmpleados(aux);
+      console.log(aux)
+
+    })()
+  }, [])
+
+
+
+
+  const tableData = [];
+  for (let i = 0; i < 10; i += 1) {
+    const rowData = [];
+    for (let j = 0; j < 5; j += 1) {
+      rowData.push(`${i}${j}`);
     }
+    tableData.push(rowData);
+
 
     return (
 

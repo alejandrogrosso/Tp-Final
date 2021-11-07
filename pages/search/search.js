@@ -144,7 +144,7 @@ export default function Search({ navigation }) {
 
             <Text>Provisorio </Text>
             <View>
-                <TouchableOpacity onPress={() => navigation.navigate('Admin')
+                <TouchableOpacity onPress={() => navigation.navigate('Results')
                 }>
                     <View >
                         <Text style={{ color: 'red' }} >ir a results</Text>
