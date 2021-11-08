@@ -20,7 +20,7 @@ export default {
     async getClientes() {
         return await apiClient.get('/clientes')
     },
-    async updateCliente(id, nuevoRol) {
+    async updateUsuario(id, nuevoRol) {
         return await apiClient.post(`/usuarios/${id}/cambiarRol`, { "rol": nuevoRol })
     }/*
     postProductos(producto) {

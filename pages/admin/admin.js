@@ -34,7 +34,7 @@ export default function TableAdmin(props) {
 
   const updateUserRole = async (rol) => {
     console.log(selectedUser);
-    await clientesServices.updateCliente(selectedUser._id, rol.key);
+    await clientesServices.updateUsuario(selectedUser._id, rol.key);
     await downloadUsers()
   };
 
