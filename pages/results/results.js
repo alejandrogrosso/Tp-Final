@@ -24,8 +24,6 @@ export default function TablaResultados() {
       const response = await clientesServices.getClientes();
       const aux = {
         tableData: response.data.map((values) => {
-          //console.log(Object.entries(values)[0][0])
-          //console.log(Object.entries(values)[0])
           var arrayValores = [];
           for (let x of Object.entries(values)) {
             console.log(x);
@@ -39,15 +37,10 @@ export default function TablaResultados() {
         tableHead: retornaCampos().filter(valor => valor !== '_id')
       }
       setDataClientes(aux);
-      //console.log(aux)
+
 
     })()
   }, [])
-
-
-
-
-
   return (
 
 
@@ -86,7 +79,7 @@ export default function TablaResultados() {
 const styles = StyleSheet.create({
   container: { padding: 16, backgroundColor: '#fff', backgroundColor: "#fff", marginTop: Constants.statusBarHeight, alignItems: 'center' },
   header: { height: 50 },
-  text: { textAlign: 'center', fontWeight: '100' },
+  text: { textAlign: 'center', fontWeight: '100', width: 150 },
   dataWrapper: { marginTop: -1 },
   row: { height: 40, backgroundColor: '#E7E6E1' },
   espacio: { margin: 50 },
