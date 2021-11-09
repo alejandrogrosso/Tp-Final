@@ -18,15 +18,25 @@ export default function TablaResultados() {
         var arrayCampos = [];
         for (let x of response.data) {
           arrayCampos = Object.keys(x);
-
         }
-        console.log(arrayCampos)
         return arrayCampos
       }
       const response = await clientesServices.getClientes();
       const aux = {
-        tableData: response.data.map((values) => Object.values(values)),
-        tableHead: retornaCampos()
+        tableData: response.data.map((values) => {
+          //console.log(Object.entries(values)[0][0])
+          //console.log(Object.entries(values)[0])
+          var arrayValores = [];
+          for (let x of Object.entries(values)) {
+            console.log(x);
+            if (x[0] !== '_id') {
+              arrayValores.push(x[1]);
+            }
+          }
+          return arrayValores
+
+        }),
+        tableHead: retornaCampos().filter(valor => valor !== '_id')
       }
       setDataClientes(aux);
       //console.log(aux)
@@ -50,7 +60,7 @@ export default function TablaResultados() {
       <ScrollView horizontal={true}>
         <View>
           <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
-            <Row data={dataClientes.tableHead} widthArr={dataClientes.tableData.widthArr} style={styles.header} textStyle={styles.text} />
+            <Row data={dataClientes.tableHead} style={styles.header} textStyle={styles.text} />
           </Table>
           <ScrollView style={styles.dataWrapper}>
             <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
@@ -59,7 +69,6 @@ export default function TablaResultados() {
                   <Row
                     key={index}
                     data={rowData}
-                    widthArr={dataClientes.tableData.widthArr}
                     style={[styles.row, index % 2 && { backgroundColor: '#F7F6E7' }]}
                     textStyle={styles.text}
                   />
