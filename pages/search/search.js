@@ -8,7 +8,9 @@ import { color } from 'react-native-reanimated';
 import clientesServices from '../../services/clientesServices';
 const camposRol =
 {
+    "Otra": "01",
     "Nombre": "Juan",
+    "AlgoMas": "Juan",
     "Apellido": "Perez",
     "Sucursal": "01",
     "Saldo": {
@@ -71,13 +73,13 @@ export default function Search({ navigation }) {
                     <View key={index}>
                         <TouchableOpacity onPress={() => activarInput(x)}>
                             <View style={styles.button}>
-                                <Text>{x}</Text>
+                                <Text >{x}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                 ))
             }
-            </View>
+            </View >
 
             <View style={styles.container}>
                 {
@@ -105,6 +107,7 @@ export default function Search({ navigation }) {
                                 (campos[x] && (tipoCampos[x]?.type == "Saldo") && (
                                     <>
                                         <TextInput
+                                            returnKeyType={'done'}
                                             keyboardType={'numeric'}
                                             style={styles.inputSaldo}
                                             onChangeText={(text) => onChangeTextValores(text, "SaldoMin")}
@@ -113,6 +116,7 @@ export default function Search({ navigation }) {
                                         />
                                         <Text style={{ marginTop: 20 }}> ----- </Text>
                                         <TextInput
+                                            returnKeyType={'done'}
                                             keyboardType={'numeric'}
                                             style={styles.inputSaldo}
                                             onChangeText={(text) => onChangeTextValores(text, "SaldoMax")}
@@ -158,9 +162,12 @@ export default function Search({ navigation }) {
 const styles = StyleSheet.create({
     button: {
         margin: 10,
+        padding: 2,
         display: 'flex',
-        color: 'black',
-
+        borderColor: 'green',
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: 'green'
     },
     input: {
         height: 40,
@@ -186,10 +193,14 @@ const styles = StyleSheet.create({
     container: {
         marginTop: Constants.statusBarHeight,
         alignItems: 'center',
+
     },
     contenedorBotones: {
+        flexDirection: 'row',
         marginTop: 35,
         alignItems: 'center',
+        display: 'flex'
+
 
     },
 
