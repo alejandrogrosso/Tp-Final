@@ -8,9 +8,7 @@ import { color } from 'react-native-reanimated';
 import clientesServices from '../../services/clientesServices';
 const camposRol =
 {
-    "Otra": "01",
     "Nombre": "Juan",
-    "AlgoMas": "Juan",
     "Apellido": "Perez",
     "Sucursal": "01",
     "Saldo": {
@@ -199,7 +197,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 35,
         alignItems: 'center',
-        display: 'flex'
+        display: 'flex',
+        flexWrap: 'wrap'
 
 
     },

@@ -1,11 +1,31 @@
-
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import Constants from "expo-constants";
+import GlobalContext, { authData } from '../../components/globals/context.js';
+import clientesServices from '../../services/clientesServices.js'
 
 export default function Login({ navigation }) {
+
     const [usuario, onChangeUsuario] = React.useState(null);
     const [contrasenia, onChangeContrasenia] = React.useState(null);
+    const { setAuthData } = useContext(GlobalContext)
+    const [login, setLogin] = useState(authData)
+
+    const postLogin = async () => {
+        try {
+            const response = await clientesServices.login(login.dni, login.pass);
+            console.log(response.data[0].dni)
+            setAuthData({
+                ...authData,
+                dni: login.dni,
+                rol: response.data[0].rol
+            })
+
+        } catch (error) {
+            Alert.alert(error.response.data);
+        }
+    }
+
     return (
 
         <View style={styles.container}>
@@ -13,21 +33,21 @@ export default function Login({ navigation }) {
             <Text>Usuario</Text>
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeUsuario}
-                value={usuario}
+                onChangeText={(text) => { setLogin({ ...login, dni: text }) }}
+                value={login.dni}
                 placeholder="Ingrese usuario"
             />
             <Text>Contraseña</Text>
             <TextInput
+                secureTextEntry={true}
                 style={styles.input}
-                onChangeText={onChangeContrasenia}
-                value={contrasenia}
+                onChangeText={(text) => { setLogin({ ...login, pass: text }) }}
+                value={login.pass}
                 placeholder="Ingrese contraseña"
             />
             <Button
                 title="Iniciar sesion"
-                onPress={() => navigation.navigate('Search')
-                }
+                onPress={postLogin}
             />
 
         </View>

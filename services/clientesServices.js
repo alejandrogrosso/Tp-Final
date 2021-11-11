@@ -12,7 +12,6 @@ const apiClient = axios.create({
 export default {
     async getUsuarios() {
         return await apiClient.get('/usuarios')
-
     },
     async getSucursales() {
         return await apiClient.get('/sucursales')
@@ -22,7 +21,12 @@ export default {
     },
     async updateUsuario(id, nuevoRol) {
         return await apiClient.post(`/usuarios/${id}/cambiarRol`, { "rol": nuevoRol })
-    }/*
+    },
+    async login(dni, pass) {
+
+        return await apiClient.post(`/login`, { "dni": dni, "pass": pass })
+
+    },/*
     postProductos(producto) {
         return apiClient.post('/productos/', producto)
     },

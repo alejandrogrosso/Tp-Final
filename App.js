@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+
+import React, { useState } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
-import StackNavigator from './components/StackNavigator';
-import Login from './pages/login/login.js'
-import Search from './pages/search/search.js'
-import Results from './pages/results/results.js'
-import Admin from './pages/admin/admin.js'
-import Desplegable from './pages/results/components/desplegable.js'
-import Constants from "expo-constants";
+import StackUsuario from './components/StackNavigator/index';
+import StackAdmin from './components/StackNavigator/indexAdmin';
+import StackLogin from './components/StackNavigator/indexLogin';
+import GlobalContext, { authData } from './components/globals/context';
 
 
 export default function App() {
-  
+  const [AuthData, setAuthData] = useState(authData)
+  const isAuthenticated = () => AuthData.dni !== ""
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
+    <GlobalContext.Provider value={{ AuthData, setAuthData }} >
+      {console.log(AuthData)}
+      <NavigationContainer >
+        {
+          (isAuthenticated() && authData.rol == "Admin" &&
+            <StackAdmin />
+          )
+          ||
+          (isAuthenticated() &&
+            <StackUsuario />
+          )
+          ||
+          (!isAuthenticated() &&
+            <StackLogin />
+          )
+        }
+      </NavigationContainer>
+    </GlobalContext.Provider >
   );
 }
