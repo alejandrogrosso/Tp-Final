@@ -11,6 +11,7 @@ export default function Login({ navigation }) {
     const [contrasenia, onChangeContrasenia] = React.useState(null);
     const { setAuthData } = useContext(GlobalContext)
     const [login, setLogin] = useState(authData)
+    
 
     const postLogin = async () => {
         try {
@@ -19,7 +20,8 @@ export default function Login({ navigation }) {
             setAuthData({
                 ...authData,
                 dni: login.dni,
-                rol: response.data[0].rol
+                rol: response.data[0].rol,
+                campos: response.data[1]
             })
 
         } catch (error) {

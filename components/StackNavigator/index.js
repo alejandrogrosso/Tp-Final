@@ -12,7 +12,7 @@ export default function StackNavigator() {
     const Stack = createStackNavigator()
 
     return (
-        <Stack.Navigator initialRouteName={'Results'}>
+        <Stack.Navigator initialRouteName={'Search'}>
             <Stack.Screen name={'Search'} component={Search} options={{ title: 'Busqueda' }, {
                 headerRight: () => (<TouchableOpacity
                     onPress={() => {

@@ -12,7 +12,7 @@ export default function App() {
   const isAuthenticated = () => AuthData.dni !== ""
   return (
     <GlobalContext.Provider value={{ AuthData, setAuthData }} >
-      {console.log(AuthData)}
+      {/*console.log(AuthData)*/}
       <NavigationContainer >
         {
           (isAuthenticated() && (AuthData.rol == "Admin") &&
