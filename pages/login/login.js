@@ -3,9 +3,10 @@ import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import Constants from "expo-constants";
 import GlobalContext, { authData } from '../../components/globals/context.js';
 import clientesServices from '../../services/clientesServices.js'
+import biometricsAuth from '../LocalAuth/localAuth.js'
 
 export default function Login({ navigation }) {
-
+   
     const [usuario, onChangeUsuario] = React.useState(null);
     const [contrasenia, onChangeContrasenia] = React.useState(null);
     const { setAuthData } = useContext(GlobalContext)
@@ -14,7 +15,7 @@ export default function Login({ navigation }) {
     const postLogin = async () => {
         try {
             const response = await clientesServices.login(login.dni, login.pass);
-            console.log(response.data[0].dni)
+            
             setAuthData({
                 ...authData,
                 dni: login.dni,
@@ -49,7 +50,7 @@ export default function Login({ navigation }) {
                 title="Iniciar sesion"
                 onPress={postLogin}
             />
-
+     
         </View>
 
 

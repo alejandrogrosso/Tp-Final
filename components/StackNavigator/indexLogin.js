@@ -1,8 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from '../../pages/login/login.js'
+import LocalAuth from '../../pages/LocalAuth/localAuth.js';
 
 export default function StackNavigator() {
+
     const Stack = createStackNavigator()
     return (
         <Stack.Navigator initialRouteName={'Login'}>

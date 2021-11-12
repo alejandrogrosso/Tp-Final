@@ -6,16 +6,15 @@ export default function Desplegable() {
     return (
         <SelectDropdown
             defaultButtonText='Procesar'
+
             data={procesos}
             onSelect={(selectedItem, index) => {
                 console.log(selectedItem, index)
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
-
                 return selectedItem
             }}
             rowTextForSelection={(item, index) => {
-
                 return item
             }}
         />

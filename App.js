@@ -15,7 +15,7 @@ export default function App() {
       {console.log(AuthData)}
       <NavigationContainer >
         {
-          (isAuthenticated() && authData.rol == "Admin" &&
+          (isAuthenticated() && (AuthData.rol == "Admin") &&
             <StackAdmin />
           )
           ||

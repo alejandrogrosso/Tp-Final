@@ -58,7 +58,7 @@ export default function TableAdmin(props) {
         visible={modalOpened}
         onModalClose={() => setModalOpened(false)}
         data={roles}
-        initValue="Select something yummy!"
+        initValue=""
         onChange={(option) => { updateUserRole(option) }} />
       <ScrollView horizontal={true}>
         <Table borderStyle={{ borderColor: 'transparent' }}>
@@ -70,7 +70,7 @@ export default function TableAdmin(props) {
                 <TableWrapper key={index} style={styles.row}>
                   <>
                     {
-                      keyValues.filter(keyValue => keyValue[0] !== '_id' && keyValue[0] !== 'rol').map((keyValue, cellIndex) => {
+                      keyValues.filter(keyValue => keyValue[0] !== '_id' && keyValue[0] !== 'rol' && keyValue[0] !== 'pass').map((keyValue, cellIndex) => {
                         const [key, value] = keyValue
                         return <Cell key={cellIndex} data={value} textStyle={styles.text} />
                       })
@@ -90,10 +90,10 @@ export default function TableAdmin(props) {
 
 const styles = StyleSheet.create({
   container: { marginTop: Constants.statusBarHeight, paddingTop: 30, backgroundColor: '#fff', backgroundColor: "#fff", },
-  head: { height: 40, backgroundColor: '#808B97' },
+  head: { height: 40, backgroundColor: '#7EBBEF' },
   text: { margin: 6, width: 100 },
-  row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
-  btn: { width: 100, height: 18, backgroundColor: '#78B7BB', borderRadius: 2 },
-  btnText: { textAlign: 'center', color: '#fff' },
+  row: { flexDirection: 'row', backgroundColor: '#C4D7E7' },
+  btn: { width: 100, height: 18, backgroundColor: '#7EBBEF', borderRadius: 2 },
+  btnText: { textAlign: 'center', color: '#000000' },
   espacio: { margin: 50 }
 });

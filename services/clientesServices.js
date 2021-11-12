@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Search from '../pages/search/search'
 import getSucursales from './sucursales'
 
 const apiClient = axios.create({
@@ -23,10 +24,12 @@ export default {
         return await apiClient.post(`/usuarios/${id}/cambiarRol`, { "rol": nuevoRol })
     },
     async login(dni, pass) {
-
         return await apiClient.post(`/login`, { "dni": dni, "pass": pass })
-
-    },/*
+    },
+    async search(valores) {
+        return await apiClient.post('/resultados', valores)
+    },
+    /*
     postProductos(producto) {
         return apiClient.post('/productos/', producto)
     },

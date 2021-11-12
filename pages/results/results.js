@@ -50,7 +50,7 @@ export default function TablaResultados() {
 
       <View style={{ margin: 10 }}></View>
 
-      <ScrollView horizontal={true}>
+      <ScrollView horizontal={true} >
         <View>
           <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
             <Row data={dataClientes.tableHead} style={styles.header} textStyle={styles.text} />
@@ -62,7 +62,7 @@ export default function TablaResultados() {
                   <Row
                     key={index}
                     data={rowData}
-                    style={[styles.row, index % 2 && { backgroundColor: '#F7F6E7' }]}
+                    style={[styles.row]}
                     textStyle={styles.text}
                   />
                 ))
@@ -78,9 +78,9 @@ export default function TablaResultados() {
 
 const styles = StyleSheet.create({
   container: { padding: 16, backgroundColor: '#fff', backgroundColor: "#fff", marginTop: Constants.statusBarHeight, alignItems: 'center' },
-  header: { height: 50 },
+  header: { height: 50, backgroundColor: '#7EBBEF' },
   text: { textAlign: 'center', fontWeight: '100', width: 150 },
   dataWrapper: { marginTop: -1 },
-  row: { height: 40, backgroundColor: '#E7E6E1' },
+  row: { height: 40, backgroundColor: '#C4D7E7' },
   espacio: { margin: 50 },
 });

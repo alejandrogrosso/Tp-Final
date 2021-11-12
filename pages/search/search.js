@@ -8,12 +8,12 @@ import { color } from 'react-native-reanimated';
 import clientesServices from '../../services/clientesServices';
 const camposRol =
 {
-    "Nombre": "Juan",
-    "Apellido": "Perez",
-    "Sucursal": "01",
-    "Saldo": {
+    "nombre": "",
+    "apellido": "",
+    "sucursal": "",
+    "saldo": {
         min: 0,
-        max: 27000
+        max: 0
     }
 }
 const tipoCampos = {
@@ -71,7 +71,7 @@ export default function Search({ navigation }) {
                     <View key={index}>
                         <TouchableOpacity onPress={() => activarInput(x)}>
                             <View style={styles.button}>
-                                <Text >{x}</Text>
+                                <Text style={styles.buttonText}>{x}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -133,7 +133,7 @@ export default function Search({ navigation }) {
                                         <TextInput onChangeText={(text) => onChangeTextValores(text, x)}
                                             style={styles.input}
                                             value={valores[x]}
-                                            placeholder={x}
+                                            placeholder={x.charAt(0).toUpperCase()}
                                         />
                                     </>))}
                         </View>
@@ -146,10 +146,10 @@ export default function Search({ navigation }) {
 
             <Text>Provisorio </Text>
             <View>
-                <TouchableOpacity onPress={() => navigation.navigate('Results')
+                <TouchableOpacity onPress={() => clientesServices.search(valores)
                 }>
-                    <View >
-                        <Text style={{ color: 'red' }} >ir a results</Text>
+                    <View style={styles.buttonSend}>
+                        <Text style={styles.buttonTextSend} >Buscar</Text>
                     </View>
                 </TouchableOpacity>
             </View >
@@ -159,14 +159,37 @@ export default function Search({ navigation }) {
 
 const styles = StyleSheet.create({
     button: {
+        width: 75,
+        height: 30,
         margin: 10,
         padding: 2,
         display: 'flex',
-        borderColor: 'green',
-        borderWidth: 1,
         borderRadius: 5,
-        backgroundColor: 'green'
+        backgroundColor: '#207EDC'
     },
+    buttonText: {
+        textAlign: 'center',
+        color: '#fff',
+        marginTop: 4,
+        textTransform: 'capitalize'
+    },
+    buttonSend: {
+        width: 100,
+        height: 40,
+        margin: 10,
+        padding: 2,
+        display: 'flex',
+        borderRadius: 5,
+        backgroundColor: '#7F858A'
+    },
+    buttonTextSend: {
+        textAlign: 'center',
+        color: '#fff',
+        marginTop: 5,
+        textTransform: 'capitalize',
+        fontSize: 17
+    },
+
     input: {
         height: 40,
         width: 200,
@@ -191,7 +214,6 @@ const styles = StyleSheet.create({
     container: {
         marginTop: Constants.statusBarHeight,
         alignItems: 'center',
-
     },
     contenedorBotones: {
         flexDirection: 'row',
@@ -199,13 +221,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexWrap: 'wrap'
-
-
     },
 
     text: {
         fontSize: 200,
-    }
+    },
+
+
 
 
 
