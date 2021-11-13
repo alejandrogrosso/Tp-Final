@@ -17,9 +17,14 @@ export default function TablaResultados({ navigation }) {
   useEffect(() => {
     (async () => {
 
+      console.log('AuthData', AuthData)
+      console.log('resultlgobal', resultsGlobal)
       const response = resultsGlobal.map(item => {
         const headers = _.intersection(Object.keys(item), AuthData.campos)
         const resultsCampos = _.pickBy(item, (value, key) => {
+          if (key == 'saldo' && AuthData.campos.includes('saldoMin')) {
+            return true
+          }
           // console.log(key, headers.includes(key))
           return headers.includes(key)
         })

@@ -21,11 +21,9 @@ export default function Search({ navigation }) {
             const response = await clientesServices.getSucursales();
             tipoCampos.sucursal.options = response.data
         })()
-        return () => {
-            setResultsGlobal([])
-        }
+
     }, [])
-    const { AuthData, setAuthData, resultsGlobal, setResultsGlobal } = useContext(GlobalContext)
+    const { AuthData, setResultsGlobal } = useContext(GlobalContext)
 
 
     const [campos, setCampos] = useState(AuthData.campos.reduce((acumulador, actual) => {
@@ -58,7 +56,7 @@ export default function Search({ navigation }) {
     };
 
     const onClickBuscar = async () => {
-        const valoresAbuscar = valores
+        const valoresAbuscar = { ...valores }
         _.forEach(valoresAbuscar, (value, key) => {
             if (key == 'saldoMin' || key == 'saldoMax' || key == 'sucursal') {
                 const num = parseInt(value)

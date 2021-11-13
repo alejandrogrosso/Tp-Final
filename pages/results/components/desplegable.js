@@ -2,7 +2,7 @@ import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown'
 export default function Desplegable() {
 
-    const procesos = ["Crear PDF", "Enviar Mail", "Imprimir"]
+    const procesos = ["Crear PDF", "Enviar Mail"]
     return (
         <SelectDropdown
             defaultButtonText='Procesar'
