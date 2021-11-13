@@ -1,27 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-
 import Constants from "expo-constants";
 import SelectDropdown from 'react-native-select-dropdown'
-//import TextInput1 from "./components/TextInput.js"
-import { color } from 'react-native-reanimated';
 import clientesServices from '../../services/clientesServices';
-import GlobalContext, { authData } from '../../components/globals/context.js';
+import GlobalContext from '../../components/globals/context.js';
+import _ from 'lodash'
 
 
-/*{
-    "nombre": "",
-    "apellido": "",
-    "sucursal": "",
-    "saldo": {
-        min: 0,
-        max: 0
-    }
-}*/
 const tipoCampos = {
     "nombre": { type: "text" },
     "sucursal": { type: "dropdown", options: [] },
-    "saldo": { type: "saldo" }
+    "saldoMin": { type: "number" },
+    "saldoMax": { type: "number" }
 }
 
 export default function Search({ navigation }) {
@@ -31,16 +21,25 @@ export default function Search({ navigation }) {
             const response = await clientesServices.getSucursales();
             tipoCampos.sucursal.options = response.data
         })()
+        return () => {
+            setResultsGlobal([])
+        }
     }, [])
-    const { AuthData, setAuthData } = useContext(GlobalContext)
-    const [camposRol, setCamposRol] = useState(AuthData.campos)
-    console.log(AuthData.campos)
-    const [campos, setCampos] = useState(camposRol.reduce((acumulador, actual) => {
+    const { AuthData, setAuthData, resultsGlobal, setResultsGlobal } = useContext(GlobalContext)
+
+
+    const [campos, setCampos] = useState(AuthData.campos.reduce((acumulador, actual) => {
         acumulador[actual] = false;
         return acumulador;
     }, {}));
 
-    const [valores, setValores] = useState(camposRol);
+
+    const [valores, setValores] = useState(AuthData.campos.reduce((acumulador, actual) => {
+        acumulador[actual] = '';
+        return acumulador;
+    }, {}));
+
+
 
     const activarInput = (nombre) => {
         let newCampos = { ...campos };
@@ -54,23 +53,30 @@ export default function Search({ navigation }) {
 
     const onChangeTextValores = (text, campo) => {
         let newValores = { ...valores };
-        if (campo.startsWith('Saldo')) {
-            if (campo === "SaldoMin") {
-                newValores.Saldo = {
-                    min: text,
-                    max: newValores.Saldo.max
-                }
-            } else if (campo === 'SaldoMax') {
-                newValores.Saldo = {
-                    min: newValores.Saldo.min,
-                    max: text
-                }
-            }
-        } else {
-            newValores[campo] = text;
-        }
+        newValores[campo] = text;
         setValores(newValores);
     };
+
+    const onClickBuscar = async () => {
+        const valoresAbuscar = valores
+        _.forEach(valoresAbuscar, (value, key) => {
+            if (key == 'saldoMin' || key == 'saldoMax' || key == 'sucursal') {
+                const num = parseInt(value)
+                if (isNaN(num)) {
+                    valoresAbuscar[key] = ""
+                } else {
+                    valoresAbuscar[key] = num
+                }
+
+            } else {
+                valoresAbuscar[key] = value
+            }
+        });
+        console.log('valoresAbuscar', valoresAbuscar)
+        const resultados = await clientesServices.search(valoresAbuscar);
+        setResultsGlobal(resultados.data)
+        navigation.navigate('Results')
+    }
 
     return (
         <ScrollView>
@@ -98,7 +104,7 @@ export default function Search({ navigation }) {
                                             defaultButtonText={x}
                                             data={tipoCampos[x].options}
                                             onSelect={(selectedItem, index) => {
-                                                console.log(selectedItem, index)
+                                                onChangeTextValores(selectedItem, x);
                                             }}
                                             buttonTextAfterSelection={(selectedItem, index) => {
                                                 return selectedItem
@@ -111,24 +117,17 @@ export default function Search({ navigation }) {
 
                                     ||
 
-                                    (campos[x] && (tipoCampos[x]?.type == "saldo") && (
+                                    (campos[x] && (tipoCampos[x]?.type == "number") && (
                                         <>
+                                            <Text>{x}</Text>
                                             <TextInput
+                                                type={'number'}
                                                 returnKeyType={'done'}
                                                 keyboardType={'numeric'}
                                                 style={styles.inputSaldo}
-                                                onChangeText={(text) => onChangeTextValores(text, "saldoMin")}
-                                                value={valores["saldo"]["min"]}
+                                                onChangeText={(text) => onChangeTextValores(text, x)}
+                                                value={valores[x]}
                                                 placeholder="Ingrese un minimo"
-                                            />
-                                            <Text style={{ marginTop: 20 }}> ----- </Text>
-                                            <TextInput
-                                                returnKeyType={'done'}
-                                                keyboardType={'numeric'}
-                                                style={styles.inputSaldo}
-                                                onChangeText={(text) => onChangeTextValores(text, "saldoMax")}
-                                                value={valores["saldo"]["max"]}
-                                                placeholder="Ingrese un maximo"
                                             />
 
                                         </>
@@ -155,17 +154,18 @@ export default function Search({ navigation }) {
 
                 <Text>Provisorio </Text>
                 <View>
-                    <TouchableOpacity onPress={() => clientesServices.search(valores)
-                    }>
+                    <TouchableOpacity onPress={() => onClickBuscar()}
+                    >
                         <View style={styles.buttonSend}>
                             <Text style={styles.buttonTextSend} >Buscar</Text>
                         </View>
                     </TouchableOpacity>
                 </View >
             </View >
-        </ScrollView>
+        </ScrollView >
     );
 }
+
 
 const styles = StyleSheet.create({
     button: {

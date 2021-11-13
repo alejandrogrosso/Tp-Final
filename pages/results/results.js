@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
-import { Table, TableWrapper, Row } from 'react-native-table-component';
+import { Table, Row } from 'react-native-table-component';
 import Desplegable from './components/desplegable.js'
 import Constants from "expo-constants";
-import clientesServices from '../../services/clientesServices';
-import { object } from 'prop-types';
+import GlobalContext from '../../components/globals/context.js';
+import _ from 'lodash'
 
-export default function TablaResultados() {
+export default function TablaResultados({ navigation }) {
+  const { AuthData, resultsGlobal } = useContext(GlobalContext)
+  //console.log('resultados en results', resultados)
   const [dataClientes, setDataClientes] = useState({
     tableHead: [],
     tableData: []
@@ -14,42 +16,46 @@ export default function TablaResultados() {
 
   useEffect(() => {
     (async () => {
+
+      const response = resultsGlobal.map(item => {
+        const headers = _.intersection(Object.keys(item), AuthData.campos)
+        const resultsCampos = _.pickBy(item, (value, key) => {
+          // console.log(key, headers.includes(key))
+          return headers.includes(key)
+        })
+
+        return resultsCampos
+      })
+
+      console.log('response filtrado', response)
       function retornaCampos() {
         var arrayCampos = [];
-        for (let x of response.data) {
+        for (let x of response) {
           arrayCampos = Object.keys(x);
         }
         return arrayCampos
       }
-      const response = await clientesServices.getClientes();
+
       const aux = {
-        tableData: response.data.map((values) => {
+        tableData: response.map((values) => {
           var arrayValores = [];
           for (let x of Object.entries(values)) {
-            console.log(x);
             if (x[0] !== '_id') {
               arrayValores.push(x[1]);
             }
           }
           return arrayValores
-
         }),
         tableHead: retornaCampos().filter(valor => valor !== '_id')
       }
       setDataClientes(aux);
-
-
     })()
   }, [])
+
   return (
-
-
     <View style={styles.container}>
-
       <Desplegable />
-
       <View style={{ margin: 10 }}></View>
-
       <ScrollView horizontal={true} >
         <View>
           <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>

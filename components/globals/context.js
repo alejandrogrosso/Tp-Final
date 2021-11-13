@@ -6,8 +6,9 @@ const authData = {
     dni: "",
     campos: []
 }
+const resultsMostrar = []
 
-
+export { resultsMostrar }
 
 export { authData }
 
