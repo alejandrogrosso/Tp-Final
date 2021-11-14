@@ -8,7 +8,6 @@ import _ from 'lodash'
 
 export default function TablaResultados({ navigation }) {
   const { AuthData, resultsGlobal } = useContext(GlobalContext)
-  //console.log('resultados en results', resultados)
   const [dataClientes, setDataClientes] = useState({
     tableHead: [],
     tableData: []
@@ -17,22 +16,19 @@ export default function TablaResultados({ navigation }) {
   useEffect(() => {
     (async () => {
 
-      console.log('AuthData', AuthData)
-      console.log('resultlgobal', resultsGlobal)
+
       const response = resultsGlobal.map(item => {
         const headers = _.intersection(Object.keys(item), AuthData.campos)
         const resultsCampos = _.pickBy(item, (value, key) => {
           if (key == 'saldo' && AuthData.campos.includes('saldoMin')) {
             return true
           }
-          // console.log(key, headers.includes(key))
           return headers.includes(key)
         })
-
         return resultsCampos
       })
 
-      console.log('response filtrado', response)
+
       function retornaCampos() {
         var arrayCampos = [];
         for (let x of response) {
@@ -58,8 +54,9 @@ export default function TablaResultados({ navigation }) {
   }, [])
 
   return (
+
     <View style={styles.container}>
-      <Desplegable />
+      <Desplegable navigation={navigation} />
       <View style={{ margin: 10 }}></View>
       <ScrollView horizontal={true} >
         <View>
@@ -82,7 +79,8 @@ export default function TablaResultados({ navigation }) {
           </ScrollView>
         </View>
       </ScrollView>
-    </View>
+    </View >
+
   )
 }
 

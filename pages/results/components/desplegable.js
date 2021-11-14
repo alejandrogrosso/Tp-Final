@@ -1,6 +1,8 @@
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown'
-export default function Desplegable() {
+import clientesServices from '../../../services/clientesServices';
+import pdf from '../../pdf/pdf';
+export default function Desplegable({ navigation }) {
 
     const procesos = ["Crear PDF", "Enviar Mail"]
     return (
@@ -8,8 +10,15 @@ export default function Desplegable() {
             defaultButtonText='Procesar'
 
             data={procesos}
-            onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index)
+            onSelect={async (selectedItem, index) => {
+                console.log('', index, selectedItem)
+                if (index == 1) {
+                    console.log('CORREO', index, selectedItem)
+                    navigation.navigate('Email');
+                } else {
+                    console.log('PDF', index, selectedItem)
+                    navigation.navigate('Pdf');
+                }
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem

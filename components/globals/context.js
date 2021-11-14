@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const authData = {
     rol: "",
     dni: "",
@@ -10,6 +9,8 @@ const resultsMostrar = []
 
 export { resultsMostrar }
 
-export { authData }
+export {
+    authData
+}
 
 export default React.createContext()

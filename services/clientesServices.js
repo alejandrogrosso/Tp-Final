@@ -1,5 +1,4 @@
 import axios from 'axios'
-import getSucursales from './sucursales'
 
 const apiClient = axios.create({
     baseURL: `http://192.168.1.11:3030`,
@@ -28,6 +27,10 @@ export default {
     async search(valores) {
         return await apiClient.post('/resultados', valores)
     },
+    async correo(elCorreo) {
+        console.log(elCorreo.resultados)
+        return await apiClient.post('/email', { "para": elCorreo.para, "asunto": elCorreo.asunto, "cuerpoMensaje": elCorreo.cuerpoMensaje, "resultados": elCorreo.resultados })
+    }
     /*
     postProductos(producto) {
         return apiClient.post('/productos/', producto)

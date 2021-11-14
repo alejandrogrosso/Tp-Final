@@ -1,13 +1,31 @@
 import { hasHardwareAsync, isEnrolledAsync, authenticateAsync } from 'expo-local-authentication';
 
-const biometricsAuth = async () => {
-    const compatible = await hasHardwareAsync()
-    if (!compatible) throw 'El dispositivo no es compatible con biometria'
-    const enrolled = await isEnrolledAsync()
-    if (!enrolled) throw 'El dispositivo no tiene biometria habilitada'
-    const result = await authenticateAsync()
-    if (!result.success) throw `${result.error} - Authentication unsuccessful`
-    return
+const checkDeviceBiometricCompatible = async () => {
+    try {
+        const compatible = await hasHardwareAsync();
+        const enrolled = await isEnrolledAsync();
+        //if (!compatible) throw 'El dispositivo no es compatible con biometria'
+        //if (!enrolled) throw 'El dispositivo no tiene biometria habilitada'
+
+        return compatible && enrolled;
+    } catch {
+        return false;
+    }
 }
 
-export default biometricsAuth
+const biometricsAuth = async () => {
+    try {
+        //return await checkDeviceBiometricCompatible() && (await authenticateAsync()).success;
+
+        if (await checkDeviceBiometricCompatible()) {
+            const result = await authenticateAsync();
+            return result.success;
+        }
+
+        return false;
+    } catch {
+        return false;
+    }
+}
+
+export { checkDeviceBiometricCompatible, biometricsAuth };

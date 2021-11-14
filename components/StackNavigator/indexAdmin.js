@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import Login from '../../pages/login/login.js'
 import Admin from '../../pages/admin/admin.js'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import GlobalContext from '../../components/globals/context.js';
@@ -18,7 +17,9 @@ export default function StackNavigator() {
                         setAuthData({
                             rol: "",
                             dni: "",
+                            campos: []
                         })
+                      
                     }}>
                     <View style={styles.btn}><Text style={styles.btnText}>Logout</Text></View>
                 </TouchableOpacity >)

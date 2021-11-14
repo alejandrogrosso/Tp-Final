@@ -150,7 +150,7 @@ export default function Search({ navigation }) {
                 <View style={styles.espacio}></View>
 
 
-                <Text>Provisorio </Text>
+               
                 <View>
                     <TouchableOpacity onPress={() => onClickBuscar()}
                     >
