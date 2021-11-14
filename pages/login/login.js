@@ -7,9 +7,6 @@ import { getBiometricData, saveBiometricData, resetBiometricData } from '../../c
 import { checkDeviceBiometricCompatible, biometricsAuth } from '../LocalAuth/localAuth.js'; '../LocalAuth/localAuth.js';
 
 export default function Login({ navigation }) {
-
-    const [usuario, onChangeUsuario] = React.useState(null);
-    const [contrasenia, onChangeContrasenia] = React.useState(null);
     const { setAuthData } = useContext(GlobalContext);
     const [login, setLogin] = useState(authData);
 
@@ -80,9 +77,7 @@ export default function Login({ navigation }) {
     }, []);
 
     return (
-
         <View style={styles.container}>
-
             <Text>Usuario</Text>
             <TextInput
                 style={styles.input}
@@ -102,15 +97,11 @@ export default function Login({ navigation }) {
                 title="Iniciar sesion"
                 onPress={() => postLogin()}
             />
-
             {/* <Button
                 title="borrar datos biometricos"
                 onPress={() => resetBiometricData()}
             /> */}
-
         </View>
-
-
     );
 }
 
@@ -125,7 +116,5 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-    },
-
-
+    }
 });

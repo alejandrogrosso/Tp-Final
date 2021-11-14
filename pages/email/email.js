@@ -1,17 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import Constants from "expo-constants";
-import GlobalContext from '../../components/globals/context.js';
 import clientesServices from '../../services/clientesServices.js'
 
-
 export default function email({ navigation, route }) {
-    const { resultsGlobal } = useContext(GlobalContext)
     const [correoCompleto, setCorreoCompleto] = useState({ "para": "", "asunto": "", "cuerpoMensaje": "", "resultados": route.params?.htmlResult })
 
     return (
         <View style={styles.container}>
-
             <Text>Para: </Text>
             <TextInput
                 style={styles.input}
@@ -32,7 +28,6 @@ export default function email({ navigation, route }) {
                 onChangeText={(text) => { setCorreoCompleto({ ...correoCompleto, cuerpoMensaje: text }) }}
                 value={correoCompleto.cuerpoMensaje}
                 multiline={true}
-
             />
             <Button
                 title="Enviar"
@@ -47,10 +42,7 @@ export default function email({ navigation, route }) {
                     }
                 }}
             />
-
         </View>
-
-
     );
 }
 
@@ -74,6 +66,4 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlignVertical: 'top'
     },
-
-
 });

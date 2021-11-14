@@ -33,7 +33,6 @@ export default function TableAdmin(props) {
   }
 
   const updateUserRole = async (rol) => {
-    console.log(selectedUser);
     await clientesServices.updateUsuario(selectedUser._id, rol.key);
     await downloadUsers()
   };
@@ -49,9 +48,7 @@ export default function TableAdmin(props) {
     </TouchableOpacity >
   );
 
-
   return (
-
     < View style={styles.container} >
       <ModalSelector
         customSelector={<></>}
@@ -83,10 +80,9 @@ export default function TableAdmin(props) {
           }
         </Table>
       </ScrollView>
-    </View >
+    </View>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: { marginTop: Constants.statusBarHeight, paddingTop: 30, backgroundColor: '#fff', backgroundColor: "#fff", },

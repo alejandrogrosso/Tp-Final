@@ -28,18 +28,6 @@ export default {
         return await apiClient.post('/resultados', valores)
     },
     async correo(elCorreo) {
-        console.log(elCorreo.resultados)
         return await apiClient.post('/email', { "para": elCorreo.para, "asunto": elCorreo.asunto, "cuerpoMensaje": elCorreo.cuerpoMensaje, "resultados": elCorreo.resultados })
     }
-    /*
-    postProductos(producto) {
-        return apiClient.post('/productos/', producto)
-    },
-    deleteProducto(id) {
-        return apiClient.delete('/productos/' + id)
-    },
-    putProducto(producto) {
-        console.log(producto)
-        return ('/productos/' + producto.id, producto)
-    },*/
 }

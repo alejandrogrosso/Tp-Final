@@ -12,7 +12,6 @@ export default function Desplegable({ navigation, tableResults }) {
 
             data={procesos}
             onSelect={async (selectedItem, index) => {
-                console.log('', index, selectedItem)
                 const htmlResult = tablaPdf({ tableHead: tableResults.tableHead, tableData: tableResults.tableData });
                 if (index == 1) {
                     navigation.navigate('Email', { htmlResult });

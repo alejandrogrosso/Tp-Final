@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Constants from "expo-constants";
 import SelectDropdown from 'react-native-select-dropdown'
 import clientesServices from '../../services/clientesServices';
 import GlobalContext from '../../components/globals/context.js';
 import _ from 'lodash'
-
+// import { useFocusEffect } from '@react-navigation/native';
 
 const tipoCampos = {
     "nombre": { type: "text" },
@@ -15,29 +15,34 @@ const tipoCampos = {
 }
 
 export default function Search({ navigation }) {
-
-    useEffect(() => {
-        (async () => {
-            const response = await clientesServices.getSucursales();
-            tipoCampos.sucursal.options = response.data
-        })()
-
-    }, [])
     const { AuthData, setResultsGlobal } = useContext(GlobalContext)
-
-
     const [campos, setCampos] = useState(AuthData.campos.reduce((acumulador, actual) => {
         acumulador[actual] = false;
         return acumulador;
     }, {}));
-
-
     const [valores, setValores] = useState(AuthData.campos.reduce((acumulador, actual) => {
         acumulador[actual] = '';
         return acumulador;
     }, {}));
 
+    useEffect(async () => {
+        const response = await clientesServices.getSucursales();
+        tipoCampos.sucursal.options = response.data
+    }, [])
 
+    const resetBusqueda = () => {
+        let newCampos = { ...campos };
+        let newValores = { ...valores };
+        Object.keys(newCampos).forEach((value) => {
+            newCampos[value] = false;
+        });
+        Object.keys(newValores).forEach((value) => {
+            newValores[value] = "";
+        });
+
+        setCampos(newCampos);
+        setValores(newValores);
+    }
 
     const activarInput = (nombre) => {
         let newCampos = { ...campos };
@@ -46,6 +51,11 @@ export default function Search({ navigation }) {
         } else {
             newCampos[nombre] = true;
         }
+
+        let newValores = { ...valores };
+        newValores[nombre] = "";
+
+        setValores(newValores);
         setCampos(newCampos);
     };
 
@@ -70,10 +80,9 @@ export default function Search({ navigation }) {
                 valoresAbuscar[key] = value
             }
         });
-        console.log('valoresAbuscar', valoresAbuscar)
         const resultados = await clientesServices.search(valoresAbuscar);
-        setResultsGlobal(resultados.data)
-        navigation.navigate('Results')
+        setResultsGlobal(resultados.data);
+        navigation.navigate('Results');
     }
 
     return (
@@ -146,16 +155,19 @@ export default function Search({ navigation }) {
                         ))
                     }
                 </View>
-
                 <View style={styles.espacio}></View>
-
-
-               
                 <View>
                     <TouchableOpacity onPress={() => onClickBuscar()}
                     >
                         <View style={styles.buttonSend}>
-                            <Text style={styles.buttonTextSend} >Buscar</Text>
+                            <Text style={styles.buttonTextSend}>Buscar</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <TouchableOpacity onPress={() => resetBusqueda()}>
+                        <View style={styles.buttonSend}>
+                            <Text style={styles.buttonTextSend}>Reset</Text>
                         </View>
                     </TouchableOpacity>
                 </View >
@@ -183,6 +195,15 @@ const styles = StyleSheet.create({
     },
     buttonSend: {
         width: 100,
+        height: 40,
+        margin: 10,
+        padding: 2,
+        display: 'flex',
+        borderRadius: 5,
+        backgroundColor: '#7F858A'
+    },
+    buttonSearch: {
+        width: 200,
         height: 40,
         margin: 10,
         padding: 2,
@@ -230,13 +251,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexWrap: 'wrap'
     },
-
     text: {
         fontSize: 200,
     },
-
-
-
-
-
 });

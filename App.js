@@ -12,8 +12,7 @@ export default function App() {
   const [resultsGlobal, setResultsGlobal] = useState(resultsMostrar)
   const isAuthenticated = () => AuthData.dni !== ""
   return (
-    <GlobalContext.Provider value={{ AuthData, setAuthData, resultsGlobal, setResultsGlobal }} >
-      {/*console.log(AuthData)*/}
+    <GlobalContext.Provider value={{ AuthData, setAuthData, resultsGlobal, setResultsGlobal }}>
       <NavigationContainer >
         {
           (isAuthenticated() && (AuthData.rol == "Admin") &&

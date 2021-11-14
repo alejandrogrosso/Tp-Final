@@ -7,7 +7,7 @@ const printToFile = async (html) => {
         html
         //resultsGlobal
     });
-    console.log('El archivo se guardo en :', uri);
+    //console.log('El archivo se guardo en :', uri);
     await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
 }
 
