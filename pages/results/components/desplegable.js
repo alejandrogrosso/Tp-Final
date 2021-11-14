@@ -1,8 +1,9 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
-import clientesServices from '../../../services/clientesServices';
-import pdf from '../../pdf/pdf';
-export default function Desplegable({ navigation }) {
+import tablaPdf from '../../../components/pdf/tablaPdf';
+import { printToFile } from '../../../components/pdf/pdf';
+export default function Desplegable({ navigation, tableResults }) {
 
     const procesos = ["Crear PDF", "Enviar Mail"]
     return (
@@ -12,12 +13,17 @@ export default function Desplegable({ navigation }) {
             data={procesos}
             onSelect={async (selectedItem, index) => {
                 console.log('', index, selectedItem)
+                const htmlResult = tablaPdf({ tableHead: tableResults.tableHead, tableData: tableResults.tableData });
                 if (index == 1) {
-                    console.log('CORREO', index, selectedItem)
-                    navigation.navigate('Email');
+                    navigation.navigate('Email', { htmlResult });
                 } else {
-                    console.log('PDF', index, selectedItem)
-                    navigation.navigate('Pdf');
+                    try {
+                        printToFile(htmlResult);
+                    } catch (err) {
+                        Alert.alert(
+                            'Exportar a PDF', `Error al exportar a PDF: ${err}`
+                        );
+                    }
                 }
             }}
             buttonTextAfterSelection={(selectedItem, index) => {

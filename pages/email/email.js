@@ -5,13 +5,11 @@ import GlobalContext from '../../components/globals/context.js';
 import clientesServices from '../../services/clientesServices.js'
 
 
-export default function email() {
+export default function email({ navigation, route }) {
     const { resultsGlobal } = useContext(GlobalContext)
-    const [correoCompleto, setCorreoCompleto] = useState({ "para": "", "asunto": "", "cuerpoMensaje": "", "resultados": resultsGlobal })
-
+    const [correoCompleto, setCorreoCompleto] = useState({ "para": "", "asunto": "", "cuerpoMensaje": "", "resultados": route.params?.htmlResult })
 
     return (
-
         <View style={styles.container}>
 
             <Text>Para: </Text>
@@ -40,10 +38,12 @@ export default function email() {
                 title="Enviar"
                 onPress={async () => {
                     try {
-                        await clientesServices.correo(correoCompleto)
+                        let res = await clientesServices.correo(correoCompleto);
+                        Alert.alert("E-mail", res.data);
+                        navigation.goBack();
                     } catch (error) {
                         console.error(error);
-                        Alert.alert(error.response.data);
+                        Alert.alert("Email", error.response.data);
                     }
                 }}
             />

@@ -56,7 +56,7 @@ export default function TablaResultados({ navigation }) {
   return (
 
     <View style={styles.container}>
-      <Desplegable navigation={navigation} />
+      <Desplegable tableResults={dataClientes} navigation={navigation} />
       <View style={{ margin: 10 }}></View>
       <ScrollView horizontal={true} >
         <View>
