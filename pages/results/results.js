@@ -76,12 +76,11 @@ export default function TablaResultados({ navigation }) {
         </View>
       </ScrollView>
     </View >
-
   )
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 16, backgroundColor: '#fff', backgroundColor: "#fff", marginTop: Constants.statusBarHeight, alignItems: 'center' },
+  container: { padding: 16, backgroundColor: '#fff', backgroundColor: "#fff", alignItems: 'center' },
   header: { height: 50, backgroundColor: '#7EBBEF' },
   text: { textAlign: 'center', fontWeight: '100', width: 150 },
   dataWrapper: { marginTop: -1 },

@@ -85,7 +85,7 @@ export default function TableAdmin(props) {
 }
 
 const styles = StyleSheet.create({
-  container: { marginTop: Constants.statusBarHeight, paddingTop: 30, backgroundColor: '#fff', backgroundColor: "#fff", },
+  container: { paddingTop: 30, backgroundColor: '#fff', backgroundColor: "#fff", },
   head: { height: 40, backgroundColor: '#7EBBEF' },
   text: { margin: 6, width: 100 },
   row: { flexDirection: 'row', backgroundColor: '#C4D7E7' },

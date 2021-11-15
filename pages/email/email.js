@@ -48,7 +48,7 @@ export default function email({ navigation, route }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: Constants.statusBarHeight,
+        marginTop: 30,
         alignItems: 'center',
     },
     input: {

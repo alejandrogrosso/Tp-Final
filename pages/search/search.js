@@ -241,7 +241,6 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     container: {
-        marginTop: Constants.statusBarHeight,
         alignItems: 'center',
     },
     contenedorBotones: {
