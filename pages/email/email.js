@@ -5,7 +5,7 @@ import clientesServices from '../../services/clientesServices.js'
 
 export default function email({ navigation, route }) {
     const [correoCompleto, setCorreoCompleto] = useState({ "para": "", "asunto": "", "cuerpoMensaje": "", "resultados": route.params?.htmlResult })
-
+    const [cargando, setCargando] = useState(true);
     return (
         <View style={styles.container}>
             <Text>Para: </Text>
@@ -33,8 +33,13 @@ export default function email({ navigation, route }) {
                 title="Enviar"
                 onPress={async () => {
                     try {
+                        if (cargando) {
+                            Alert.alert("Cargando...");
+                        }
                         let res = await clientesServices.correo(correoCompleto);
+                        setCargando(false);
                         Alert.alert("E-mail", res.data);
+
                         navigation.goBack();
                     } catch (error) {
                         console.error(error);
@@ -42,6 +47,7 @@ export default function email({ navigation, route }) {
                     }
                 }}
             />
+
         </View>
     );
 }

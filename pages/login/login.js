@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
-import Constants from "expo-constants";
 import GlobalContext, { authData } from '../../components/globals/context.js';
 import clientesServices from '../../services/clientesServices.js'
 import { getBiometricData, saveBiometricData, resetBiometricData } from '../../components/biometricAsynStorage/biometricAsyncStorage.js';

@@ -11,7 +11,7 @@ const roles = [
 ]
 
 export default function TableAdmin(props) {
-  const navigation = props.navigation;
+  //const navigation = props.navigation;
   const [dataUsers, setDataUsers] = useState({
     tableHead: ['Dni', 'Nombre', 'Apellido', 'Rol',],
     tableData: []

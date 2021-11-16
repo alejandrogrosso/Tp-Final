@@ -7,7 +7,6 @@ export default function StackNavigator() {
     return (
         <Stack.Navigator initialRouteName={'Login'}>
             <Stack.Screen name={'Login'} component={Login} options={{ title: 'Login' }} />
-
         </Stack.Navigator>
     )
 }
